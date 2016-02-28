@@ -1,6 +1,6 @@
 # A R package for making R packages
 
-you can install it by running: 
+Install it by running: 
 
 ```
 
