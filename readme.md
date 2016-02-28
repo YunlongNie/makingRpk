@@ -1,6 +1,6 @@
-# some R code for making R pacakges
+# A R package for making R packages
 
-you can install it by running: 
+Install it by running: 
 
 ```
 
@@ -9,6 +9,10 @@ library("devtools")
 install_github('YunlongNie/makingRpk')
 
 ```
+
+A demo example is under the Demo folder
+
+Note that this package works in a max os system.
 
 ----
 ## changelog
