@@ -80,6 +80,7 @@ cat('\n#########################\n')
 
 if (commit&nrow(other_files))
 {
+cat('\nrun git pull...\n')	
 git_pull_out = 'git pull'%>%system(.,intern=TRUE)
 
 if (verbose) git_pull_out%>%paste(.,collapse="\n")%>%cat
