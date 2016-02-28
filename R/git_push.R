@@ -15,8 +15,9 @@
 #' git_push(git_dir=getwd(),commit=TRUE,comment="first git push")
 #' }
 
-git_push = function(commit=FALSE,git_dir = '~/Dropbox/Yunlong/',comment = " ", keyword=".",type=c("deleted","modified","new file",'renamed'),limit_size=  5000,verbose=TRUE)
+git_push = function(git_dir = '~/Dropbox/Yunlong/',commit=FALSE,comment = " ", keyword="no_filter", limit_size=5000,verbose=TRUE,type=c("deleted","modified","new file",'renamed'))
 {
+
 
 setwd(git_dir)
 (Lines = system('git status',intern=TRUE))
@@ -34,7 +35,7 @@ if (any(grepl('Untracked files:',Lines,fixed=TRUE)))
 file_size= Lines[(grep('Untracked files:',Lines,fixed=TRUE)+2):(length(Lines)-1)]%>%grep('\t',.,value=TRUE)%>%gsub('\t',"",.)%>%data.frame(type="untracked",file=.)%>%mutate(filesize=file.size(file)/1000)%>%data.frame%>%rbind.data.frame(.,file_size)
 }
 
-file_size = file_size%>%filter(grepl(keyword,file))
+if(keyword!="no_filter") file_size = file_size%>%dplyr::filter(grepl(keyword,file))
 
 
 if(any(grepl(' ',file_size$file))) {
@@ -45,7 +46,7 @@ if(any(grepl(' ',file_size$file))) {
 	cat('\n')
 }
 
-large_files = file_size%>%filter(filesize>limit_size)
+large_files = file_size%>%dplyr::filter(filesize>limit_size)
 
 if(nrow(large_files)) {
 	cat('Warning!!! Large files detected:\n')
@@ -57,19 +58,19 @@ if(nrow(large_files)) {
 	cat("\nNo large files detected\n")
 }
 
-other_files = file_size%>%filter(filesize<=limit_size|is.na(filesize))
+other_files = file_size%>%dplyr::filter(filesize<=limit_size|is.na(filesize))
 
 if (nrow(other_files))
 {
 
 cat("\nFiles ready to commit\n")
 cat('#########################\n')
-other_files%>%filter(type!="deleted")%>%print
+other_files%>%dplyr::filter(type!="deleted")%>%print
 cat('\n#########################\n')
 
 cat("\nFiles need to rm\n")
 cat('#########################\n')
-other_files%>%filter(type=="deleted")%>%print
+other_files%>%dplyr::filter(type=="deleted")%>%print
 cat('\n#########################\n')
 
 } else 
@@ -79,17 +80,17 @@ cat('\n#########################\n')
 
 if (commit&nrow(other_files))
 {
-(git_add = other_files%>%filter(type!="deleted")%>%select(file)%>%first%>%paste0(.,collapse=" ")%>%sprintf("git add %s",.))
+(git_add = other_files%>%dplyr::filter(type!="deleted")%>%select(file)%>%first%>%paste0(.,collapse=" ")%>%sprintf("git add %s",.))
 # comment = "'this is a R function for pushing git files but leaves the larges files out'"
 (git_commit= sprintf("git commit -m '%s'", comment))
 (git_push = "git push")
-(git_rm = other_files%>%filter(type=="deleted")%>%select(file)%>%first%>%paste(.,collapse=" ")%>%sprintf("git rm %s",.))
+(git_rm = other_files%>%dplyr::filter(type=="deleted")%>%select(file)%>%first%>%paste(.,collapse=" ")%>%sprintf("git rm %s",.))
 cat('\nrun git add...\n')
 system(git_add,intern=TRUE)
 
-if (other_files%>%filter(type=="deleted")%>%nrow)
+if (other_files%>%dplyr::filter(type=="deleted")%>%nrow)
 {
-(git_rm = other_files%>%filter(type=="deleted")%>%select(file)%>%first%>%paste(.,collapse=" ")%>%sprintf("git rm %s",.))
+(git_rm = other_files%>%dplyr::filter(type=="deleted")%>%select(file)%>%first%>%paste(.,collapse=" ")%>%sprintf("git rm %s",.))
 cat('\nrun git rm...\n')
 system(git_rm,intern=TRUE)%>%print
 }
@@ -102,6 +103,7 @@ cat('\nDONE\n')
 }
 
 }
+
 
 }
 
