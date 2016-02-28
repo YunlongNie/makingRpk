@@ -1,4 +1,4 @@
-# A R package for making R pacakges
+# A R package for making R packages
 
 you can install it by running: 
 
