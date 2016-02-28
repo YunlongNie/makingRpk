@@ -80,6 +80,7 @@ cat('\n#########################\n')
 
 if (commit&nrow(other_files))
 {
+git_pull = sprintf('git pull')%>%system
 (git_add = other_files%>%dplyr::filter(type!="deleted")%>%select(file)%>%first%>%paste0(.,collapse=" ")%>%sprintf("git add %s",.))
 # comment = "'this is a R function for pushing git files but leaves the larges files out'"
 (git_commit= sprintf("git commit -m '%s'", comment))
