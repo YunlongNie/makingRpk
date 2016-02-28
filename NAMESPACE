@@ -2,5 +2,7 @@
 
 export(DESCRIPTION_make)
 export(create_rda_from_txt)
+export(git_push)
 export(move_Rcode)
 import(dplyr)
+import(tidyr)
