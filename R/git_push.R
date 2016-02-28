@@ -80,26 +80,29 @@ cat('\n#########################\n')
 
 if (commit&nrow(other_files))
 {
-git_pull = sprintf('git pull')%>%system
+git_pull_out = 'git pull'%>%system(.,intern=TRUE)
+
+if (verbose) git_pull_out%>%paste(.,collapse="\n")%>%cat
+
 (git_add = other_files%>%dplyr::filter(type!="deleted")%>%select(file)%>%first%>%paste0(.,collapse=" ")%>%sprintf("git add %s",.))
 # comment = "'this is a R function for pushing git files but leaves the larges files out'"
 (git_commit= sprintf("git commit -m '%s'", comment))
 (git_push = "git push")
 (git_rm = other_files%>%dplyr::filter(type=="deleted")%>%select(file)%>%first%>%paste(.,collapse=" ")%>%sprintf("git rm %s",.))
 cat('\nrun git add...\n')
-system(git_add,intern=TRUE)
+system(git_add,intern=TRUE)%>%paste(.,collapse="\n")%>%cat
 
 if (other_files%>%dplyr::filter(type=="deleted")%>%nrow)
 {
 (git_rm = other_files%>%dplyr::filter(type=="deleted")%>%select(file)%>%first%>%paste(.,collapse=" ")%>%sprintf("git rm %s",.))
 cat('\nrun git rm...\n')
-system(git_rm,intern=TRUE)%>%print
+system(git_rm,intern=TRUE)%>%paste(.,collapse="\n")%>%cat
 }
 
 cat('\nrun git commit...\n')
-system(git_commit,intern=TRUE)%>%print
+system(git_commit,intern=TRUE)%>%paste(.,collapse="\n")%>%cat
 cat('\nrun git push...\n')
-system(git_push,intern=TRUE)%>%print
+system(git_push,intern=TRUE)%>%paste(.,collapse="\n")%>%cat
 cat('\nDONE\n')
 }
 
