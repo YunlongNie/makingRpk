@@ -1,4 +1,4 @@
-# some R code for making R pacakges
+# A R package for making R pacakges
 
 you can install it by running: 
 
