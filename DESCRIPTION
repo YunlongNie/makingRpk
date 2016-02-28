@@ -1,0 +1,10 @@
+Package: makingRpk
+Type: Package
+Title: R package to make R package
+Version: 1.0
+Build Time: 2016-02-28 01:02:20
+Author: Yunlong
+Contact: nyunlong AT sfu.ca
+DESCRIPTION: no discription
+Url: https://github.com/YunlongNie/makingRpk
+RoxygenNote: 5.0.1
