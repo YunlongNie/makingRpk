@@ -2,13 +2,13 @@
 
 you can install it by running: 
 
-``
+```
 
 library("devtools")
 
 install_github('YunlongNie/makingRpk')
 
-``
+```
 
 ----
 ## changelog
