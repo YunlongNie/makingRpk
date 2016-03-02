@@ -4,24 +4,24 @@
 \alias{git_push}
 \title{This function automatically commit and push the changes on to github}
 \usage{
-git_push(commit = FALSE, git_dir = "~/Dropbox/Yunlong/", comment = " ",
-  keyword = ".", type = c("deleted", "modified", "new file", "renamed"),
-  limit_size = 5000, verbose = TRUE)
+git_push(git_dir = "~/Dropbox/Yunlong/", commit = FALSE, comment = " ",
+  keyword = "no_filter", limit_size = 5000, verbose = TRUE,
+  type = c("deleted", "modified", "new file", "renamed"))
 }
 \arguments{
-\item{commit}{TRUE or FALSE, whether to commit or not}
-
 \item{git_dir}{repo directory}
+
+\item{commit}{TRUE or FALSE, whether to commit or not}
 
 \item{comment}{comment message, a string, only matters when commit is TRUE}
 
 \item{keyword}{a string for keyword filtering, for you only want commit a certain folder each time}
 
-\item{type}{a string or a string vector, one of "deleted","modified","new file" and "renamed"}
-
 \item{limit_size}{large file limit, default is 5000 which means 5MB}
 
 \item{verbose}{TRUE or FALSE, print the git messages}
+
+\item{type}{a string or a string vector, one of "deleted","modified","new file" and "renamed"}
 }
 \description{
 This function automatically commit and push the changes on to github
